@@ -1,6 +1,7 @@
 import express from 'express';
 import { 
-    getAllLocation, 
+    getAllLocation,
+    getAllBarcodes, 
     getLocation, 
     postLocation, 
     updateLocation, 
@@ -11,6 +12,8 @@ let router = express.Router();
 
     // Retrieve all Location
     router.get('/location', getAllLocation);
+
+    router.get('/barcodes', getAllBarcodes);
 
     // Retrieve a single Location with LocationId
     router.get('/location/:locationId', getLocation);

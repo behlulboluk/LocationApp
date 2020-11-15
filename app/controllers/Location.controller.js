@@ -1,10 +1,60 @@
 import GeoLocation from '../models/Location.model';
+import Barcode from '../models/Barcode.model';
+
 import mongoose from 'mongoose';
+import queryString from 'query-string';
 import apiqueryparameters from 'api-query-params';
 
 mongoose.set('useFindAndModify', false);
 
 // Retrieve and return all notes from the database.
+export const getAllBarcodes = async (req, res) => {
+
+    // let query = apiqueryparameters(req.query);
+
+    // if (req.query.sortBy === "createdAt") {
+    //     query.sortBy = { createdAt: -1 }
+    // }
+    // console.log(req.query.sort)
+    // console.log(query.sort)
+    // console.log(query)
+    // let { filter, page, limit, sortBy, projection, population } = query;
+
+    try {
+        var page = parseInt(req.query.page)
+        if(!page) page = 0
+        console.log(req.query.page)
+
+        const parse = queryString.parse( req._parsedUrl.query, {parseBooleans: true})
+        delete parse.page
+        delete parse.sort
+        console.log(parse)
+        var barcodes = await Barcode.find(parse).sort({_id: -1}).skip(page*2).limit(2)
+        res.send( barcodes );
+    } catch (err) {
+        res.status(400).send(err);
+    }
+
+    // Barcode.find(filter)
+    //     .skip(page)
+    //     .limit(limit)
+    //     .sort(sortBy)
+    //     .select(projection)
+    //     .exec((err, geoLocation) => {
+    //         if (err) {
+    //             return res.status(500).send({
+    //                 message: err.message || "Some error occurred while retrieving notes."
+    //             });
+    //         }
+    //         if (geoLocation.length === 0) {
+    //             return res.status(404).send({
+    //                 message: "Note not found"
+    //             });
+    //         }
+    //         return res.status(200).send(geoLocation);
+    //     });
+};
+
 export const getAllLocation = (req, res) => {
 
     let query = apiqueryparameters(req.query);
