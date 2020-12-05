@@ -35,17 +35,6 @@ app.get('/', (req, res) => {
       });
 });
 
-//app routes
-// app.route("/note")
-//     .get(note.getNote)
-//     .post(note.postNote);
-// app.route("/note/:noteId")
-//     .get(note.getNotes)
-//     .delete(note.deleteNote)
-//     .put(note.updateNote);
-
-// require('./app/routes/note.route')(app);
-
 // listen for requests
 app.listen(port, () => {
     console.log(`Our server is running on port ${port} - http://localhost:${port}/`);
